@@ -92,14 +92,14 @@ export class ProductsService {
     });
   }
 
-  async upload(file: Buffer, purgeProductsBeforeImport: boolean) {
+  async upload(file: Buffer, purge: boolean) {
     if (!file) {
       return { success: false, message: 'File is empty' };
     }
-    if (purgeProductsBeforeImport) {
-      console.log('deleting products');
+    if (purge) {
+      this.logger.log('Deleting products');
       await this.deleteAll();
-      console.log('products deleted');
+      this.logger.log('Products were deleted successfully');
     }
     const worksheets = xlsx.parse(file);
     this.shopifyClient.product.delete;
@@ -109,8 +109,11 @@ export class ProductsService {
 
       // Loop through rows grouped by handle
       const rowsByHandle = Object.values(groupBy(data, 0)) as string[][][];
+      let i = 1;
       for (const rowsByVariant of rowsByHandle) {
         let product: IProduct;
+
+        this.logger.log('Importing row #' + i++);
 
         for (const variantIndex of rowsByVariant.keys()) {
           const [
@@ -324,6 +327,7 @@ export class ProductsService {
         }
       }
     }
+    this.logger.log('Finished importing');
 
     return {
       success: true,
