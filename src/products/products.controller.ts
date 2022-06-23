@@ -26,7 +26,11 @@ export class ProductsController {
           type: 'string',
           format: 'binary',
         },
-        purgeProductsBeforeImport: { type: 'boolean', default: false },
+        purge: {
+          type: 'boolean',
+          default: false,
+          title: 'Purge old products data before upload',
+        },
       },
     },
   })
@@ -34,13 +38,9 @@ export class ProductsController {
   uploadFile(
     @UploadedFile()
     file: Express.Multer.File,
-    @Body(
-      'purgeProductsBeforeImport',
-      new DefaultValuePipe(false),
-      ParseBoolPipe,
-    )
-    purgeProductsBeforeImport: boolean,
+    @Body('purge', new DefaultValuePipe(false), ParseBoolPipe)
+    purge: boolean,
   ) {
-    return this.productsService.upload(file.buffer, purgeProductsBeforeImport);
+    return this.productsService.upload(file?.buffer, purge);
   }
 }
