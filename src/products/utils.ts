@@ -60,7 +60,9 @@ export const formatVariantInput = ({
       ? variantTaxable
       : (variantTaxable ?? '').toUpperCase() === 'TRUE',
   tax_code: variantTaxCode,
-  weight_unit: variantWeightUnit.toLowerCase() as ProductVariantWeightUnit,
+  weight_unit: (
+    variantWeightUnit ?? ''
+  ).toLowerCase() as ProductVariantWeightUnit,
   option1: optionValue1 || undefined,
   option2: optionValue2 || undefined,
   option3: optionValue3 || undefined,

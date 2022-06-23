@@ -111,7 +111,7 @@ export class ProductsService {
       const rowsByHandle = Object.values(groupBy(data, 0)) as string[][][];
       let i = 1;
       for (const rowsByVariant of rowsByHandle) {
-        let product: IProduct;
+        let product: IProduct | undefined = undefined;
 
         this.logger.log('Importing row #' + i++);
 
@@ -224,7 +224,7 @@ export class ProductsService {
                   position: Number(imagePosition),
                 });
                 if (product.variants?.[0]?.id) {
-                  let variantImageId: number;
+                  let variantImageId: number | undefined = undefined;
                   if (variantImageSrc === imageSrc) {
                     variantImageId = image.id;
                   } else if (variantImageSrc) {
@@ -265,7 +265,7 @@ export class ProductsService {
               break;
             // Not a valid variant, but rather an image
             case imageSrc && isNil(variantInventoryQuantity):
-              await this.createImage(product.id, {
+              await this.createImage(product!.id, {
                 src: imageSrc,
                 position: Number(imagePosition),
               });
@@ -276,23 +276,23 @@ export class ProductsService {
                 !isNil(optionValue2) ||
                 !isNil(optionValue3)):
               try {
-                const image = await this.createImage(product.id, {
+                const image = await this.createImage(product!.id, {
                   src: imageSrc,
                   position: Number(imagePosition),
                 });
 
-                let variantImageId: number;
+                let variantImageId: number | undefined = undefined;
                 if (variantImageSrc === imageSrc) {
                   variantImageId = image.id;
                 } else if (variantImageSrc) {
-                  const variantImage = await this.createImage(product.id, {
+                  const variantImage = await this.createImage(product!.id, {
                     src: variantImageSrc,
                     position: Number(imagePosition),
                   });
                   variantImageId = variantImage.id;
                 }
                 const variant = await this.createVariant(
-                  product.id,
+                  product!.id,
                   formatVariantInput({
                     variantImageId,
                     variantPrice,
