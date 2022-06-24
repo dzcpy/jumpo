@@ -1,48 +1,26 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
 ## Installation
 
 ```bash
-$ npm install
+git clone https://github.com/dzcpy/jumpo
+cd jumpo
+echo "SHOPIFY_STORE=jumpo-test.myshopify.com" > .env
+echo "SHOPIFY_ACCESS_TOKEN=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" >> .env
+echo "SHOPIFY_COLLECTION_ID=301307429021" >> .env
+echo "SHOPIFY_LOCATION_ID=66800156829" >> .env
+yarn install
 ```
 
 ## Running the app
 
 ```bash
 # development
-$ npm run start
+yarn start
 
 # watch mode
-$ npm run start:dev
+yarn start:dev
 
 # production mode
-$ npm run start:prod
+yarn start:prod
 ```
 
 ## Test
@@ -50,24 +28,39 @@ $ npm run start:prod
 ```bash
 # unit tests
 $ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
-## Support
+**Test file is located at:** [src/products/products.service.spec.ts](https://github.com/dzcpy/jumpo/blob/main/src/products/products.service.spec.ts)
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Online Test
 
-## Stay in touch
+This repo has github actions configured and is linked to Heroku. Any new commits will trigger a deployment action to Heroku using Dockerfile in the root directory.
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+**Here below is the heroku online URL:**
 
-## License
+[https://jumpo-test.herokuapp.com/api/](https://jumpo-test.herokuapp.com/api/)
 
-Nest is [MIT licensed](LICENSE).
+**Test upload:**
+![image](https://user-images.githubusercontent.com/203980/175455981-d8ee6bd6-7ad8-42c4-99af-0843e7739bd9.png)
+![image](https://user-images.githubusercontent.com/203980/175456452-64b1f221-bb97-47a7-b189-186326259a50.png)
+
+There is an option `purge`, if set to `true` then before importing the file, it will delete all the old products in the store.
+
+It may take a while to execute since Shopify's API is very slow (as long as several minutes if you are in China). I tried to make it parallel but it often fails because it's exceeded Shopify's request rate limit.
+
+When it's finished you can see there is a response body returned like this:
+
+```json
+{
+  "success": true,
+  "message": "File was uploaded and processed successfully"
+}
+```
+
+**Here is the Shopify store:**
+[https://jumpo-test.myshopify.com/](https://jumpo-test.myshopify.com/)
+
+**Store password:** `jumpo`
+
+**Collection:**
+[https://jumpo-test.myshopify.com/collections/jewelry](https://jumpo-test.myshopify.com/collections/jewelry)
