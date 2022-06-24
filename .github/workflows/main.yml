@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: SpicyPizza/create-envfile@v1.3
+        with:
+          envkey_SHOPIFY_STORE: ${{secrets.SHOPIFY_STORE}}
+          envkey_SHOPIFY_ACCESS_TOKEN: ${{secrets.SHOPIFY_ACCESS_TOKEN}}
+          envkey_SHOPIFY_COLLECTION_ID: ${{secrets.SHOPIFY_COLLECTION_ID}}
+          envkey_SHOPIFY_LOCATION_ID: ${{secrets.SHOPIFY_LOCATION_ID}}
+          directory: .
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: ${{secrets.HEROKU_APP_NAME}}
+          heroku_email: ${{secrets.HEROKU_EMAIL}}
+          usedocker: true
