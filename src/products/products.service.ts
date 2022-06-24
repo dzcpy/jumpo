@@ -102,7 +102,6 @@ export class ProductsService {
       this.logger.log('Products were deleted successfully');
     }
     const worksheets = xlsx.parse(file);
-    this.shopifyClient.product.delete;
     for (const { data } of worksheets) {
       // Skip table header
       data.shift();
